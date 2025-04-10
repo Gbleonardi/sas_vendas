@@ -1,7 +1,7 @@
 <?php
 require_once("conexao.php");
 $senha = '123';
-$senha_criptografada = md5($senha);
+$senha_criptografada = password_hash($senha, PASSWORD_DEFAULT);
 
 try {
     // Verificar se já existe um super administrador SAS
@@ -10,8 +10,20 @@ try {
 
     if ($count == 0) {
         // Criar um usuário super administrador SAS
-        $stmt = $pdo->prepare("INSERT INTO usuarios (empresa, nome, cpf, email, senha, senha_criptografada, ativo, foto, nivel, telefone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute(['0', 'Administrador SAS', '000.000.000-00', 'biel.leonardi@gmail.com', $senha, $senha_criptografada, 'sim', 'sem-foto.jpg', 'SAS', '00000000']); // Adicionei um numero de telefone padrão.
+        $stmt = $pdo->prepare("INSERT INTO usuarios (empresa, nome, cpf, email, senha_criptografada, ativo, foto, nivel, telefone)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->execute([
+    '0',
+    'Administrador SAS',
+    '000.000.000-00',
+    'biel.leonardi@gmail.com',
+    $senha_criptografada,
+    'sim',
+    'sem-foto.jpg',
+    'SAS',
+    '00000000'
+]);
+ // Adicionei um numero de telefone padrão.
 
         echo "Super administrador SAS criado com sucesso!";
     } else {
@@ -57,11 +69,11 @@ try {
             <form action="auth.php" method="post">
                 <div class="form-group">
                     <label>Nome de Usuario ou E-mail</label>
-                    <input type="text" name="usuario" class="form-control" placeholder="Email ou CPF">
+                    <input type="text" name="usuario" class="form-control" placeholder="Email ou CPF" required>
                 </div>
                 <div class="form-group">
                     <label>Senha</label>
-                    <input type="password" name="senha" class="form-control" placeholder="Senha">
+                    <input type="password" name="senha" class="form-control" placeholder="Senha" required>
                 </div>
                 <button type="submit" class="btn btn-black">Login</button>
             </form>
