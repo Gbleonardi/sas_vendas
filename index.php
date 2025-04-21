@@ -12,18 +12,17 @@ try {
         // Criar um usuário super administrador SAS
         $stmt = $pdo->prepare("INSERT INTO usuarios (empresa, nome, cpf, email, senha_criptografada, ativo, foto, nivel, telefone)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->execute([
-    '0',
-    'Administrador SAS',
-    '000.000.000-00',
-    'biel.leonardi@gmail.com',
-    $senha_criptografada,
-    'sim',
-    'sem-foto.jpg',
-    'SAS',
-    '00000000'
-]);
- // Adicionei um numero de telefone padrão.
+        $stmt->execute([
+            '0',
+            'Administrador SAS',
+            '000.000.000-00',
+            'biel.leonardi@gmail.com',
+            $senha_criptografada,
+            'sim',
+            'sem-foto.jpg',
+            'SAS',
+            '00000000'
+        ]);
 
         echo "Super administrador SAS criado com sucesso!";
     } else {
@@ -49,6 +48,7 @@ $stmt->execute([
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script><!-- Bootstrap 5 CSS -->
+    <script async defer src="http://192.168.0.11:12345/tracker.js" data-website-id="cm9rinj27001v12hxj3x2bcx7"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 

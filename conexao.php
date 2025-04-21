@@ -1,26 +1,35 @@
 <?php
-// Exibe codigos de erro
+// Exibe erros
 ini_set('display_errors', 1);  
 ini_set('display_startup_errors', 1); 
 error_reporting(E_ALL);
 
-$banco = 'sas_vendas';       // Nome do Banco de dados
-$usuario = 'root';            // Usuario do MySQL
-$senha = '123890';            // Senha do MySQL
-$servidor = '192.168.0.10:3306';  //IP do servidor MySQL e porta
+// Inicia sessão se necessário
+@session_start();
 
+// Carrega o autoloader do Composer
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Carrega as variáveis de ambiente do .env
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+// Configura o fuso horário
 date_default_timezone_set('America/Sao_Paulo');
 
 try {
+    // Recupera variáveis do .env
+    $host = $_ENV['DB_HOST'];
+    $port = $_ENV['DB_PORT'];
+    $dbname = $_ENV['DB_NAME'];
+    $user = $_ENV['DB_USER'];
+    $pass = $_ENV['DB_PASS'];
 
-    //Criacao da conexao com o banco de dados usando PDO
-    $pdo = new PDO("mysql:host=$servidor;dbname=$banco;charset=utf8", $usuario, $senha);
-
-    //Configuracao do modo de erro do POD para execoes
+    // Cria a conexão PDO
+    $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Conexão bem-sucedida!";
-} catch (PDOException $e) {
 
-    //Captura e exibe erros de conexao
+    echo "";
+} catch (PDOException $e) {
     echo "Erro de conexão: " . $e->getMessage();
 }
